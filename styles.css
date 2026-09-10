@@ -1,0 +1,31 @@
+/* Amplia o painel de volume do player do YouTube.
+   O tamanho é controlado pela variável --yt-vol-width,
+   definida via JS (content.js) a partir do valor salvo no popup. */
+
+.ytp-volume-panel,
+.ytp-volume-panel.ytp-volume-panel-controls-hidden {
+  width: var(--yt-vol-width, 300px) !important;
+  min-width: var(--yt-vol-width, 300px) !important;
+  overflow: visible !important;
+}
+
+.ytp-volume-slider,
+.ytp-volume-panel-controls-hidden .ytp-volume-slider {
+  width: var(--yt-vol-width, 280px) !important;
+  min-width: var(--yt-vol-width, 280px) !important;
+  opacity: 1 !important;
+  display: inline-block !important;
+  visibility: visible !important;
+}
+
+/* Deixa a "bolinha" (handle) do slider um pouco maior,
+   facilitando pegar e soltar com precisão. */
+.ytp-volume-slider-handle {
+  transform: scale(1.15);
+}
+
+/* Evita que o slider "pisque" ou tenha atraso ao reagir ao mouse. */
+.ytp-volume-slider-handle,
+.ytp-volume-panel {
+  transition: none !important;
+}

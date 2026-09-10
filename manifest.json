@@ -1,0 +1,28 @@
+{
+  "manifest_version": 3,
+  "name": "YouTube - Volume Ampliado",
+  "version": "1.0",
+  "description": "Deixa o slide de volume do YouTube consideravelmente maior, para ajuste fino de volume.",
+  "permissions": ["storage"],
+  "content_scripts": [
+    {
+      "matches": ["*://www.youtube.com/*", "*://youtube.com/*", "*://music.youtube.com/*"],
+      "js": ["content.js"],
+      "run_at": "document_idle"
+    }
+  ],
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "Volume do YouTube - Ajustar tamanho",
+    "default_icon": {
+      "16": "icon16.png",
+      "48": "icon48.png",
+      "128": "icon128.png"
+    }
+  },
+  "icons": {
+    "16": "icon16.png",
+    "48": "icon48.png",
+    "128": "icon128.png"
+  }
+}

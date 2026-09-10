@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<title>Volume do YouTube</title>
+<style>
+  body {
+    font-family: -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+    width: 260px;
+    padding: 16px;
+    color: #1a1a1a;
+  }
+  h1 {
+    font-size: 14px;
+    margin: 0 0 12px;
+  }
+  label {
+    font-size: 12px;
+    color: #555;
+    display: flex;
+    justify-content: space-between;
+  }
+  input[type="range"] {
+    width: 100%;
+    margin-top: 8px;
+  }
+  .hint {
+    font-size: 11px;
+    color: #888;
+    margin-top: 12px;
+    line-height: 1.4;
+  }
+  .credit {
+    display: block;
+    margin-top: 14px;
+    text-align: center;
+    font-size: 12px;
+    font-weight: 600;
+    color: #1e90ff;
+    text-decoration: none;
+  }
+  .credit:hover {
+    text-decoration: underline;
+  }
+</style>
+</head>
+<body>
+  <h1>Tamanho do slider de volume</h1>
+  <label>
+    <span>Largura</span>
+    <span id="valueLabel">300px</span>
+  </label>
+  <input type="range" id="widthRange" min="150" max="600" step="10" />
+  <p class="hint">Um slider novo substitui o do YouTube, ligado direto no volume do vídeo. Recarregue a aba do YouTube após instalar/atualizar.</p>
+  <a href="https://github.com/The-Kryz/" target="_blank" rel="noopener noreferrer" class="credit">Made by Kryz &lt;3</a>
+  <script src="popup.js"></script>
+</body>
+</html>
