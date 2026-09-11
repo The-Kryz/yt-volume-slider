@@ -30,6 +30,17 @@ Extensão para ajustar o volume dos vídeos do YouTube por meio de um controle d
 - [Brave — Extensões](brave://extensions/)
 - [Opera — Extensões](opera://extensions/)
 
+## Demonstração
+
+**Exemplo em GIF:**
+![Demonstração em GIF](gifexample.gif)
+
+**Exemplo do Popup:**
+![Exemplo do Popup](examplepopup.png)
+
+**Exemplo do Slider:**
+![Exemplo do Slider](exampleslider.png)
+
 ## Desenvolvimento
 
 Clone o repositório e abra os arquivos do projeto em seu editor:
