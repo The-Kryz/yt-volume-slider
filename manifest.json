@@ -3,8 +3,15 @@
   "name": "YouTube - Volume Ampliado",
   "version": "1.0",
   "description": "Deixa o slide de volume do YouTube consideravelmente maior, para ajuste fino de volume.",
+  "homepage_url": "https://github.com/The-Kryz/yt-volume-slider",
   "permissions": ["storage"],
   "content_scripts": [
+    {
+      "matches": ["*://www.youtube.com/*", "*://youtube.com/*", "*://music.youtube.com/*"],
+      "js": ["page-bridge.js"],
+      "world": "MAIN",
+      "run_at": "document_start"
+    },
     {
       "matches": ["*://www.youtube.com/*", "*://youtube.com/*", "*://music.youtube.com/*"],
       "js": ["content.js"],

@@ -6,6 +6,7 @@
   let labelEl = null;
   let wrapperEl = null;
   let isUserDragging = false;
+  let lastPercent = null;
 
   function clampWidth(w) {
     return Math.max(100, Math.min(700, Number(w) || DEFAULT_WIDTH));
@@ -65,6 +66,16 @@
     if (labelEl) labelEl.textContent = Number(percent).toFixed(2).replace('.', ',') + '%';
   }
 
+  // Avisa o "cérebro" do player do YouTube sobre o novo volume.
+  // Isso NÃO pode ser feito chamando player.setVolume() direto daqui, porque
+  // este script roda em um "mundo isolado" e não enxerga métodos customizados
+  // que o YouTube anexa no elemento (.setVolume, .mute, .unMute) — eles só
+  // existem no mundo principal da página. Por isso disparamos um evento que
+  // o page-bridge.js (que roda no mundo principal) escuta e executa por nós.
+  function applyVolumeViaOfficialApi(percent) {
+    document.dispatchEvent(new CustomEvent('yt-big-volume-set', { detail: { percent } }));
+  }
+
   function createSliderGroup() {
     const wrap = document.createElement('span');
     wrap.className = 'yt-big-volume-wrap';
@@ -86,8 +97,12 @@
     input.addEventListener('input', () => {
       if (!currentVideo) return;
       const percent = Number(input.value);
+      // 1) Avisa o YouTube pela API oficial (garante que ele "lembre" do volume)
+      applyVolumeViaOfficialApi(percent);
+      // 2) Ajusta o valor exato (com casas decimais) direto no vídeo, para precisão fina
       currentVideo.volume = percent / 100;
       currentVideo.muted = percent === 0;
+      lastPercent = percent;
       updateLabel(percent);
     });
 
@@ -104,6 +119,7 @@
     if (!sliderEl || !currentVideo || isUserDragging) return;
     const val = currentVideo.muted ? 0 : currentVideo.volume * 100;
     sliderEl.value = String(val);
+    lastPercent = val;
     updateLabel(val);
   }
 
@@ -121,9 +137,18 @@
     injectStyleOnce();
 
     if (video !== currentVideo) {
+      const isFirstVideo = currentVideo === null;
       if (currentVideo) currentVideo.removeEventListener('volumechange', syncSliderFromVideo);
       currentVideo = video;
       currentVideo.addEventListener('volumechange', syncSliderFromVideo);
+
+      // Se já tínhamos um volume ajustado, reaplica no vídeo novo imediatamente,
+      // antes que o YouTube tenha chance de jogar para o padrão (100%).
+      if (!isFirstVideo && lastPercent !== null) {
+        applyVolumeViaOfficialApi(lastPercent);
+        currentVideo.volume = lastPercent / 100;
+        currentVideo.muted = lastPercent <= 0;
+      }
     }
 
     // Esconde o slider nativo (mantém o botão de mudo funcionando normalmente)
